@@ -2,13 +2,34 @@ import 'package:flutter/material.dart';
 import 'register.dart';
 import 'splash_screen.dart';
 import 'forgot_password.dart';
+import 'navbar.dart';
+import 'home.dart';
+import 'keranjang.dart';
+import 'favorite.dart';
 
-void main() => runApp(
-      const MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
-      ),
+void main() => runApp(const MyApp());
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+       initialRoute: '/home',
+      routes: {
+        '/': (context) => const SplashScreen(),
+        '/home': (context) => const HomePage(),
+        '/keranjang': (context) => const KeranjangPage(),
+        '/favorite': (context) => const FavoritePage(),
+        '/login': (context) => const LoginPage(),
+        '/register': (context) => const RegisterPage(),
+        '/navbar': (context) => const NavBar(),
+        '/forgot_password': (context) => const ForgotPasswordPage(),
+      },
     );
+  }
+}
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -45,8 +66,6 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   children: <Widget>[
                     SizedBox(height: screenHeight * 0.04),
-
-                    // Logo
                     Container(
                       padding: EdgeInsets.all(screenWidth * 0.05),
                       child: CircleAvatar(
@@ -62,8 +81,6 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
-
-                    // Form
                     Expanded(
                       child: Container(
                         width: double.infinity,
@@ -91,8 +108,6 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                               SizedBox(height: screenHeight * 0.04),
-
-                              // Email dan password
                               Container(
                                 constraints: const BoxConstraints(maxWidth: 500),
                                 child: Column(
@@ -106,17 +121,11 @@ class _LoginPageState extends State<LoginPage> {
                                   ],
                                 ),
                               ),
-
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: TextButton(
                                   onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const ForgotPasswordPage(),
-                                      ),
-                                    );
+                                    Navigator.pushNamed(context, '/forgot_password');
                                   },
                                   child: Text(
                                     "forgot password",
@@ -127,8 +136,6 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                 ),
                               ),
-
-                              // Tombol Sign In
                               SizedBox(height: screenHeight * 0.01),
                               Container(
                                 width: isSmallScreen ? screenWidth * 0.5 : 200,
@@ -149,9 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                                       return;
                                     }
 
-                                    // TODO: Integrasi login ke Firebase atau server di sini
-                                    print("Email: $email");
-                                    print("Password: $password");
+                                    Navigator.pushReplacementNamed(context, '/navbar');
                                   },
                                   child: Text(
                                     "SIGN IN",
@@ -163,7 +168,6 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                 ),
                               ),
-
                               SizedBox(height: screenHeight * 0.03),
                               Row(
                                 children: [
@@ -181,7 +185,6 @@ class _LoginPageState extends State<LoginPage> {
                                   const Expanded(child: Divider(thickness: 1)),
                                 ],
                               ),
-
                               SizedBox(height: screenHeight * 0.02),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -191,7 +194,6 @@ class _LoginPageState extends State<LoginPage> {
                                   _socialButton(icon: Icons.apple, size: isSmallScreen ? 45 : 50),
                                 ],
                               ),
-
                               SizedBox(height: screenHeight * 0.03),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -205,12 +207,7 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => const RegisterPage(),
-                                        ),
-                                      );
+                                      Navigator.pushNamed(context, '/register');
                                     },
                                     child: Text(
                                       "Sign Up",
@@ -239,7 +236,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // Label field
   Widget buildInputLabel(String label, bool isSmallScreen) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 5),
@@ -253,7 +249,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // Input field
   Widget buildTextField(bool isSmallScreen, bool isPassword, TextEditingController controller) {
     return Container(
       height: isSmallScreen ? 45 : 50,
@@ -273,7 +268,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // Tombol sosial media
   Widget _socialButton({
     required IconData icon,
     required double size,
