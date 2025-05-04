@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pertama/makanan%20ringan.dart';
+import 'package:flutter_pertama/minuman.dart';
 import 'home.dart';
 import 'keranjang.dart';
 import 'favorite.dart';
@@ -24,6 +26,8 @@ class _NavBarState extends State<NavBar> {
       const FavoritePage(),
       HomePage(onTabChanged: _changeTab),
       const MenuPage(),
+      const Menuringan(),
+      const Minuman(),
       const ProfilePage(),
     ];
   }

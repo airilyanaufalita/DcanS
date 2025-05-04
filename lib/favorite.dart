@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
+import 'header.dart';
 
 class FavoritePage extends StatelessWidget {
-  const FavoritePage({Key? key}) : super(key: key);
+  final void Function(int)? onTabChanged;
+
+  const FavoritePage({Key? key, this.onTabChanged}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Favorite")),
-      body: const Center(
-        child: Text('Halaman Favorite'),
+      body: Column(
+        children: [
+          HeaderWidget(
+            username: "Airliya Naufalita",
+            email: "airliya@gmail.com",
+            onFavoritePressed: () => onTabChanged?.call(1),
+            onCartPressed: () => onTabChanged?.call(0),
+          ),
+          const Expanded(
+            child: Center(child: Text('Halaman Favorit')),
+          ),
+        ],
       ),
     );
   }
