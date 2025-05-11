@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'header.dart';
-import 'makanan_berat.dart';
-import 'kategori_list.dart'; // <-- Tambahkan ini
+import 'kategori_list.dart';
 
-class HomePage extends StatelessWidget {
+class MenuPage extends StatelessWidget {
   final void Function(int)? onTabChanged;
 
-  const HomePage({super.key, this.onTabChanged});
+  const MenuPage({super.key, this.onTabChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +23,12 @@ class HomePage extends StatelessWidget {
                   onCartPressed: () => onTabChanged?.call(0),
                 ),
                 const SizedBox(height: 16),
-                KategoriList(
-  selectedCategory: CategoryType.berat,
-),
+
+                // Kategori dengan highlight "Makanan Berat"
+                const KategoriList(selectedCategory: CategoryType.berat),
+
                 const SizedBox(height: 26),
+
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Container(
@@ -37,7 +38,7 @@ class HomePage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: const Text(
-                      'popular',
+                      'Makanan Berat',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -46,10 +47,13 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 26),
               ],
             ),
           ),
+
+          // Grid makanan berat
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 26),
             sliver: SliverGrid.count(
@@ -58,12 +62,9 @@ class HomePage extends StatelessWidget {
               mainAxisSpacing: 20,
               childAspectRatio: 0.8,
               children: const [
-                FoodCard(image: 'assets/images/Roti & Pisang Bakar.jpg', name: 'Roti Bakar', price: 'Rp. 2.000'),
                 FoodCard(image: 'assets/images/nasgor.jpg', name: 'Nasi Goreng', price: 'Rp. 7.000'),
                 FoodCard(image: 'assets/images/pecel.jpg', name: 'Nasi Pecel', price: 'Rp. 7.000'),
                 FoodCard(image: 'assets/images/Nasi Bakar.jpg', name: 'Nasi Bakar', price: 'Rp. 9.000'),
-                FoodCard(image: 'assets/images/martabak.jpg', name: 'Martabak', price: 'Rp. 6.000'),
-                FoodCard(image: 'assets/images/milkshake oreo.jpg', name: 'Milkshake Oreo', price: 'Rp. 8.000'),
               ],
             ),
           ),
@@ -72,8 +73,6 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-
-// Hapus class CategoryCard karena sudah dipindahkan ke kategori_list.dart
 
 class FoodCard extends StatelessWidget {
   final String image;
