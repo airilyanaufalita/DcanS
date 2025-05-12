@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'main.dart'; // Ganti dengan path yang sesuai ke main.dart
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
@@ -103,7 +104,15 @@ class RegisterPage extends StatelessWidget {
                                       color: const Color.fromARGB(255, 108, 116, 118),
                                     ),
                                     child: TextButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        // Navigasi ke main.dart
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => const LoginPage(), // Ganti dengan nama halamanmu
+                                          ),
+                                        );
+                                      },
                                       child: Text(
                                         "SIGN UP",
                                         style: TextStyle(

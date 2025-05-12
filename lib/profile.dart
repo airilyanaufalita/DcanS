@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'edit_profile.dart';
+import 'favorite.dart';
+import 'history.dart';
+import 'reset_password.dart';
+import 'main.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -12,7 +17,7 @@ class ProfilePage extends StatelessWidget {
           Container(
             width: double.infinity,
             decoration: const BoxDecoration(
-              color: Color(0xFF7AA1AB), // Teal-blue background color
+              color: Color(0xFF7AA1AB),
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(30),
                 bottomRight: Radius.circular(30),
@@ -20,11 +25,10 @@ class ProfilePage extends StatelessWidget {
             ),
             child: SafeArea(
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(50.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Profile picture with edit icon
                     Stack(
                       alignment: Alignment.bottomRight,
                       children: [
@@ -35,7 +39,7 @@ class ProfilePage extends StatelessWidget {
                             shape: BoxShape.circle,
                             border: Border.all(color: Colors.white, width: 2),
                             image: const DecorationImage(
-                              image: AssetImage('assets/profile_picture.jpg'),
+                              image: AssetImage('assets/images/Kucing.jpg'),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -56,66 +60,92 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20), // Increased spacing
-                    // User name
+                    const SizedBox(height: 20),
                     const Text(
                       'Airilya Naufalita',
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 18,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 8), // Added spacing
-                    // User email
+                    const SizedBox(height: 8),
                     const Text(
                       'airilya@gmail.com',
                       style: TextStyle(
                         color: Colors.black54,
-                        fontSize: 14,
+                        fontSize: 15,
                       ),
                     ),
-                    const SizedBox(height: 20), // Added spacing
+                    const SizedBox(height: 20),
                   ],
                 ),
               ),
             ),
           ),
-          // Profile menu options
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.only(top: 20), // Added top padding
+              padding: const EdgeInsets.only(top: 50),
               children: [
                 _buildMenuItem(
                   context,
                   Icons.edit_outlined,
                   'EDIT PROFILE',
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const EditProfilePage()),
+                    );
+                  },
                 ),
+                const SizedBox(height: 6),
                 _buildMenuItem(
                   context,
                   Icons.favorite_outline,
                   'MY FAVORITE',
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const FavoritePage()),
+                    );
+                  },
                 ),
+                const SizedBox(height: 6),
                 _buildMenuItem(
                   context,
                   Icons.calendar_today_outlined,
                   'ORDER HISTORY',
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const HistoryPage()),
+                    );
+                  },
                 ),
+                const SizedBox(height: 6),
                 _buildMenuItem(
                   context,
                   Icons.key_outlined,
                   'RESET PASSWORD',
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const ResetPasswordPage()),
+                    );
+                  },
                 ),
-                const SizedBox(height: 20), // Added spacing before logout
+                const SizedBox(height: 6),
                 _buildMenuItem(
                   context,
                   Icons.logout_outlined,
                   'LOG OUT',
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (_) => const LoginPage()),
+                      (route) => false,
+                    );
+                  },
                 ),
               ],
             ),
@@ -126,11 +156,11 @@ class ProfilePage extends StatelessWidget {
   }
 
   Widget _buildMenuItem(
-    BuildContext context, 
-    IconData icon, 
-    String title, 
-    {required VoidCallback onTap}
-  ) {
+    BuildContext context,
+    IconData icon,
+    String title, {
+    required VoidCallback onTap,
+  }) {
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -138,11 +168,11 @@ class ProfilePage extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 18), // Increased vertical padding
+              padding: const EdgeInsets.symmetric(vertical: 18),
               child: Row(
                 children: [
                   Icon(icon, size: 24, color: Colors.black54),
-                  const SizedBox(width: 20), // Increased spacing
+                  const SizedBox(width: 20),
                   Text(
                     title,
                     style: const TextStyle(

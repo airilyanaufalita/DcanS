@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'main.dart'; // Ganti dengan path yang sesuai ke main.dart
 
 class ForgotPasswordPage extends StatelessWidget {
   const ForgotPasswordPage({super.key});
@@ -127,7 +128,13 @@ class ForgotPasswordPage extends StatelessWidget {
                           elevation: 0,
                         ),
                         onPressed: () {
-                          // Aksi ketika tombol SEND ditekan
+                          // Navigasi ke main.dart (MainPage)
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LoginPage(), // Ganti dengan nama halamanmu
+                            ),
+                          );
                         },
                         child: const Text(
                           'SEND',
