@@ -9,7 +9,11 @@ class KategoriList extends StatelessWidget {
   final CategoryType selectedCategory;
   final void Function(int)? onTabChanged;
 
-  const KategoriList({super.key, required this.selectedCategory, this.onTabChanged});
+  const KategoriList({
+    super.key,
+    required this.selectedCategory,
+    this.onTabChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +29,13 @@ class KategoriList extends StatelessWidget {
             isSelected: selectedCategory == CategoryType.berat,
             onTap: () {
               if (selectedCategory != CategoryType.berat) {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => MenuPage(onTabChanged: onTabChanged)),
-                );
+                onTabChanged?.call(0); // misal tab index 0 untuk berat
+                // Ganti semua pushReplacement menjadi push biasa
+Navigator.push(
+  context,
+  MaterialPageRoute(builder: (_) => const Menuringan()),
+);
+
               }
             },
           ),
@@ -39,9 +46,10 @@ class KategoriList extends StatelessWidget {
             isSelected: selectedCategory == CategoryType.ringan,
             onTap: () {
               if (selectedCategory != CategoryType.ringan) {
+                onTabChanged?.call(1); // index 1 untuk ringan
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => Menuringan(onTabChanged: onTabChanged)),
+                  MaterialPageRoute(builder: (_) => const Menuringan()),
                 );
               }
             },
@@ -53,9 +61,10 @@ class KategoriList extends StatelessWidget {
             isSelected: selectedCategory == CategoryType.minuman,
             onTap: () {
               if (selectedCategory != CategoryType.minuman) {
+                onTabChanged?.call(2); // index 2 untuk minuman
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => Minuman(onTabChanged: onTabChanged)),
+                  MaterialPageRoute(builder: (_) => const Minuman()),
                 );
               }
             },
@@ -105,8 +114,14 @@ class CategoryCard extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 12,
-              decoration: isSelected ? TextDecoration.underline : TextDecoration.none,
+              color: isSelected ? Colors.blue : Colors.black,
             ),
+          ),
+          Container(
+            height: 2,
+            width: 60,
+            color: isSelected ? Colors.blue : Colors.transparent,
+            margin: const EdgeInsets.only(top: 2),
           ),
         ],
       ),
