@@ -36,7 +36,7 @@ class _NavBarState extends State<NavBar> {
         const KeranjangPage(),
         const FavoritePage(),
         HomePage(onTabChanged: handleTabChange),
-        MenuPage(onTabChanged: handleTabChange),
+        MakananBeratPage(onTabChanged: handleTabChange),
         const ProfilePage(),
       ];
 

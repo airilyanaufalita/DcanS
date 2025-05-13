@@ -1,127 +1,111 @@
 import 'package:flutter/material.dart';
-import 'makanan_berat.dart';
-import 'makanan_ringan.dart';
-import 'minuman.dart';
 
-enum CategoryType { berat, ringan, minuman }
+class FoodItem {
+  final String name;
+  final String price;
+  final String imagePath;
+
+  FoodItem({
+    required this.name,
+    required this.price,
+    required this.imagePath,
+  });
+}
 
 class KategoriList extends StatelessWidget {
-  final CategoryType selectedCategory;
-  final void Function(int)? onTabChanged;
+  final String title;
+  final List<FoodItem> items;
 
   const KategoriList({
-    super.key,
-    required this.selectedCategory,
-    this.onTabChanged,
-  });
+    Key? key,
+    required this.title,
+    required this.items,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 120,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 40),
-        children: [
-          CategoryCard(
-            image: 'assets/images/t.berat.jpg',
-            label: 'Makanan Berat',
-            isSelected: selectedCategory == CategoryType.berat,
-            onTap: () {
-              if (selectedCategory != CategoryType.berat) {
-                onTabChanged?.call(0); // misal tab index 0 untuk berat
-                // Ganti semua pushReplacement menjadi push biasa
-Navigator.push(
-  context,
-  MaterialPageRoute(builder: (_) => const Menuringan()),
-);
-
-              }
-            },
-          ),
-          const SizedBox(width: 25),
-          CategoryCard(
-            image: 'assets/images/t.ringan.jpg',
-            label: 'Makanan Ringan',
-            isSelected: selectedCategory == CategoryType.ringan,
-            onTap: () {
-              if (selectedCategory != CategoryType.ringan) {
-                onTabChanged?.call(1); // index 1 untuk ringan
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (_) => const Menuringan()),
-                );
-              }
-            },
-          ),
-          const SizedBox(width: 30),
-          CategoryCard(
-            image: 'assets/images/t.minuman.jpg',
-            label: 'Minuman',
-            isSelected: selectedCategory == CategoryType.minuman,
-            onTap: () {
-              if (selectedCategory != CategoryType.minuman) {
-                onTabChanged?.call(2); // index 2 untuk minuman
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (_) => const Minuman()),
-                );
-              }
-            },
-          ),
-        ],
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Expanded(
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.8,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                ),
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  return _buildFoodItem(items[index]);
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
-}
 
-class CategoryCard extends StatelessWidget {
-  final String image;
-  final String label;
-  final VoidCallback? onTap;
-  final bool isSelected;
-
-  const CategoryCard({
-    super.key,
-    required this.image,
-    required this.label,
-    this.onTap,
-    this.isSelected = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
+  Widget _buildFoodItem(FoodItem item) {
+    return Card(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: isSelected ? Colors.blue : Colors.blue.shade200,
-                width: 2,
+          Expanded(
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(item.imagePath),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.asset(image, width: 90, height: 90, fit: BoxFit.cover),
-            ),
           ),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
-              color: isSelected ? Colors.blue : Colors.black,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  item.name,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  item.price,
+                  style: TextStyle(
+                    color: Colors.green,
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.favorite_border),
+                      onPressed: () {},
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.add_circle_outline),
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ),
-          Container(
-            height: 2,
-            width: 60,
-            color: isSelected ? Colors.blue : Colors.transparent,
-            margin: const EdgeInsets.only(top: 2),
           ),
         ],
       ),
