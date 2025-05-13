@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'profile.dart';
+import 'makanan_berat.dart'; // Import halaman tujuan
 
 class HistoryPage extends StatelessWidget {
   const HistoryPage({Key? key}) : super(key: key);
@@ -9,53 +10,47 @@ class HistoryPage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          // Header with back button and title
+          // Header
           Container(
-            color: const Color(0xFF7A9EA7),
-            padding: const EdgeInsets.only(top: 50.0, bottom: 30.0),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () => Navigator.pop(context),
-                        child: const Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                          size: 28,
-                        ),
-                      ),
-                      const SizedBox(width: 15),
-                      const Text(
-                        'Order History',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              color: Color(0xFF7A9EA7),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(25),
+                bottomRight: Radius.circular(25),
+              ),
+            ),
+            padding: const EdgeInsets.only(top: 70.0, bottom: 50.0),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                      size: 24,
+                    ),
                   ),
-                ),
-              ],
+                  const SizedBox(width: 15),
+                  const Text(
+                    'Order History',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-          
-          // Wave-like header bottom
-          ClipPath(
-            clipper: WaveClipper(),
-            child: Container(
-              height: 30,
-              color: const Color(0xFF7A9EA7),
-            ),
-          ),
-          
-          // Order list
+
+          // List Riwayat Pesanan
           Expanded(
             child: ListView(
-              padding: EdgeInsets.zero,
+              padding: const EdgeInsets.only(top: 15),
               children: const [
                 OrderItem(
                   date: '12-2-25',
@@ -81,40 +76,12 @@ class HistoryPage extends StatelessWidget {
               ],
             ),
           ),
-          
-
         ],
       ),
-
     );
   }
 }
 
-// Custom clipper for the wave effect
-class WaveClipper extends CustomClipper<Path> {
-  const WaveClipper();
-
-  @override
-  Path getClip(Size size) {
-    final path = Path();
-    path.lineTo(0, 0);
-    path.lineTo(0, size.height);
-    path.quadraticBezierTo(
-      size.width / 2,
-      0,
-      size.width,
-      size.height,
-    );
-    path.lineTo(size.width, 0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-}
-
-// Order item widget for each order in history
 class OrderItem extends StatelessWidget {
   final String date;
   final String foodName;
@@ -134,41 +101,33 @@ class OrderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 16.0),
       padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFFE5EBED),
         borderRadius: BorderRadius.circular(8.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            spreadRadius: 1,
-            blurRadius: 3,
-            offset: const Offset(0, 1),
-          ),
-        ],
       ),
       child: Row(
         children: [
-          // Food image
+          // Gambar Makanan
           ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: Image.asset(
               imagePath,
-              width: 80,
-              height: 80,
+              width: 70,
+              height: 70,
               fit: BoxFit.cover,
               errorBuilder: (context, _, __) => Container(
-                width: 80,
-                height: 80,
+                width: 70,
+                height: 70,
                 color: Colors.grey[300],
                 child: const Icon(Icons.image_not_supported),
               ),
             ),
           ),
           const SizedBox(width: 12),
-          
-          // Order details
+
+          // Detail Pesanan
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,13 +148,13 @@ class OrderItem extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  quantity.toString(),
+                  '$quantity',
                   style: const TextStyle(
                     fontSize: 14,
                   ),
                 ),
                 Text(
-                  'Rp. ${price.toString()}',
+                  'Rp. $price',
                   style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
@@ -204,42 +163,31 @@ class OrderItem extends StatelessWidget {
               ],
             ),
           ),
-          
-          // Buy again button
+
+          // Tombol "Beli Lagi"
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const MakananBeratPage()),
+              );
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF7A9EA7),
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.0),
               ),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
+              minimumSize: const Size(70, 30),
             ),
-            child: const Text('Beli Lagi'),
+            child: const Text(
+              'Beli Lagi',
+              style: TextStyle(fontSize: 12),
+            ),
           ),
         ],
       ),
     );
   }
-}
-
-// Main screen to demonstrate the OrderHistoryScreen
-class OrderHistoryApp extends StatelessWidget {
-  const OrderHistoryApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: const Color(0xFF7A9EA7),
-        fontFamily: 'Roboto',
-      ),
-      home: const HistoryPage(),
-    );
-  }
-}
-
-void main() {
-  runApp(const OrderHistoryApp());
 }

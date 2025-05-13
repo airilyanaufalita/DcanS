@@ -97,7 +97,7 @@ class _MakananRinganPageState extends State<MakananRinganPage> {
                     ),
                   ),
                   
-                  const SizedBox(height: 2),
+                  const SizedBox(height: 10),
                   
                   // Popular Items Grid
                   Expanded(
@@ -148,13 +148,25 @@ class _MakananRinganPageState extends State<MakananRinganPage> {
             ),
             const SizedBox(height: 9),
             Center(
-              child: Text(
-                category,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500,
-                ),
+              child: Column(
+                children: [
+                  Text(
+                    category,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  // Tambahkan garis hanya untuk kategori "Makanan Ringan"
+                  if (category == 'Makanan Ringan')
+                    Container(
+                      margin: const EdgeInsets.only(top: 3),
+                      height: 2,
+                      width: 80,
+                      color: const Color(0xFF33606E),
+                    ),
+                ],
               ),
             ),
           ],

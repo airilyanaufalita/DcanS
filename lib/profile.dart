@@ -19,8 +19,8 @@ class ProfilePage extends StatelessWidget {
             decoration: const BoxDecoration(
               color: Color(0xFF7AA1AB),
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
+                bottomLeft: Radius.circular(50),
+                bottomRight: Radius.circular(50),
               ),
             ),
             child: SafeArea(
