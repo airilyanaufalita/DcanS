@@ -4,6 +4,7 @@ import 'kategori_list.dart';
 import 'makanan_berat.dart';
 import 'makanan_ringan.dart';
 import 'minuman.dart';
+import 'navbar.dart';
 
 class MakananBeratPage extends StatefulWidget {
   final void Function(int)? onTabChanged;
